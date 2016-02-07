@@ -1,0 +1,20 @@
+{
+  "name": "tmp",
+  "version": "0.0.1",
+  "description": "",
+  "license": "",
+  "author": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./app.js"
+  },
+  "dependencies": {
+    "mongoose": "4.4.2",
+    "restify": "4.0.3"
+  },
+  "engines": {
+    "node": "4.2.5",
+    "npm": "3.7.2"
+  },
+  "private": true
+}

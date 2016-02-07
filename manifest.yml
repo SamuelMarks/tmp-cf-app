@@ -1,0 +1,19 @@
+---
+properties:
+  appmemory: 512M
+  n_instances: 1
+  appname: tmp-app
+  apphost: tmp-app
+
+applications:
+- name: tmp-app
+  memory: 512M
+  instances: 1
+  command: node app.js
+  buildpack: nodejs_buildpack
+services:
+- mongo
+
+env:
+  DEFAULT_MONGO_SERVICE_NAME:  mongo
+  NODE_MODULES_CACHE: false
