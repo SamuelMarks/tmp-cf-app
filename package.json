@@ -6,15 +6,16 @@
   "author": "",
   "main": "app.js",
   "scripts": {
-    "start": "node ./app.js"
+    "start": "node app.js"
   },
   "dependencies": {
     "mongoose": "4.4.3",
-    "restify": "4.0.3"
+    "restify": "4.0.3",
+    "config": "git+https://uspbot:usp2016Rulez!@github.com/ANATAS/config.git#develop"
   },
   "engines": {
     "node": "4.2.5",
-    "npm": "3.7.2"
+    "npm": "3.7.5"
   },
   "private": true
 }

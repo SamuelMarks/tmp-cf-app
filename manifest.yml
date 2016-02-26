@@ -12,9 +12,9 @@ applications:
   command: node app.js
   buildpack: nodejs_buildpack
 services:
-- mongo-testdb
+- mongo-broker-db
 
 env:
   DEFAULT_MONGO_SERVICE_BROKER_NAME: mongo-3.2
-  DEFAULT_MONGO_SERVICE_NAME: mongo-testdb
+  DEFAULT_MONGO_SERVICE_NAME: mongo-broker-db
   NODE_MODULES_CACHE: true
