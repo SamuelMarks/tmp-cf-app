@@ -6,11 +6,45 @@ var Cat = mongoose.model('Cat', { name: String });
 
 var server = restify.createServer({
   name: 'tmp-app',
-  version: '0.0.1'
+  version: '0.0.2'
 });
 server.use(restify.acceptParser(server.acceptable));
 server.use(restify.queryParser());
 server.use(restify.bodyParser());
+
+server.pre(function(req, res, next) {
+    mongoose_event_listeners(config.getMongoUrl());
+    mongoose.set('debug', true);
+    mongoose.connect(config.getMongoUrl(), err => {
+        if (err) req.log.error(`mongoose connection to '${config.getMongoUrl()}' failed with err = ${err}`);
+        console.info('Connected to Mongo')
+    });
+    return next();
+});
+
+function mongoose_event_listeners(uri) {
+    mongoose.connection.on('connected', function() {
+        console.log('Mongoose default connection opened to: ' + uri);
+    });
+
+    // If the connection throws an error
+    mongoose.connection.on('error', function(err) {
+        console.log('Mongoose default connection error: ' + err);
+    });
+
+    // When the connection is disconnected
+    mongoose.connection.on('disconnected', function() {
+        console.log('Mongoose default connection disconnected');
+    });
+
+    // If the Node process ends, close the Mongoose connection
+    process.on('SIGINT', function() {
+        mongoose.connection.close(function() {
+            console.log('Mongoose default connection disconnected through app termination');
+            process.exit(0);
+        });
+    });
+}
 
 server.get('/echo/:name', function (req, res, next) {
   res.send(req.params);
