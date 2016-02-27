@@ -12,7 +12,19 @@ server.use(restify.acceptParser(server.acceptable));
 server.use(restify.queryParser());
 server.use(restify.bodyParser());
 
+
+// enum
+var mongo_states = [
+  'disconnected',
+  'connected',
+  'connecting',
+  'disconnecting',
+  'unauthorized',
+  'uninitialized' // Technically `mongo_states[99]`
+];
 server.pre(function(req, res, next) {
+    if (mongoose.connection.readyState === mongo_states.indexOf('connected'))
+        return next();
     mongoose_event_listeners(config.getMongoUrl());
     mongoose.set('debug', true);
     mongoose.connect(config.getMongoUrl(), err => {
